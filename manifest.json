@@ -8,10 +8,6 @@
     "48": "icons/icon48.png",
     "128": "icons/icon128.png"
   },
-  "action": {
-    "default_icon": "icons/icon48.png",
-    "default_title": "ドラッグ＆ドロップコメント"
-  },
   "permissions": [],
   "content_scripts": [
     {
