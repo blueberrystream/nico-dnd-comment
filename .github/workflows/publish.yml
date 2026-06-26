@@ -1,0 +1,32 @@
+name: Publish
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    name: Publish chrome extension
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v7
+
+    - name: Build
+      env:
+        VERSION: ${{ github.event.release.tag_name }}
+        STORE_PUBKEY: ${{ secrets.STORE_PUBKEY }}
+      run: bash .github/workflows/build.sh
+
+    - name: Upload & Release
+      uses: mnao305/chrome-extension-upload@v6.0.0
+      with:
+        file-path: nico-dnd-comment.zip
+        extension-id: oigjfdodpifhfnnhglknfldbjhgmnfme
+        client-id: ${{ secrets.GCP_CLIENT_ID }}
+        client-secret: ${{ secrets.GCP_CLIENT_SECRET }}
+        refresh-token: ${{ secrets.GCP_REFRESH_TOKEN }}
+
+permissions:
+  contents: read
